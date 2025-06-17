@@ -11,6 +11,12 @@ steps:
   inputs:
     version: '$(dotnetSdkVersion)'
 
+- script: |
+    sudo apt-get update
+    sudo apt-get install -y mono-complete
+  displayName: 'Install Mono for NuGetCommand task'
+  condition: and(succeeded(), eq(variables['Agent.OS'], 'Linux')) # Only install on Linux agents
+    
 - task: DotNetCoreCLI@2
   displayName: 'Restore project dependencies'
   inputs:
